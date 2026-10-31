@@ -1,0 +1,4 @@
+Скрипт звіту про відкриті задачі	enhancement,cli
+README: таблиця корисних команд gh	documentation
+Помилка: звіт не враховує задачі без міток	bug,priority:high
+Аліаси gh для щоденної роботи	enhancement,cli
