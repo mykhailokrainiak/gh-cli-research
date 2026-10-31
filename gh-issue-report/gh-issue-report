@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# gh issue-report — звіт про відкриті задачі репозиторію, згрупований за мітками.
+# Використання: gh issue-report [OWNER/REPO]
+set -euo pipefail
+repo_args=()
+[ $# -gt 0 ] && repo_args=(--repo "$1")
+
+gh issue list "${repo_args[@]}" --state open --limit 200 \
+  --json number,title,labels \
+  --jq '
+    map(. + {group: (if (.labels | length) == 0 then "без мітки" else .labels[0].name end)})
+    | group_by(.group)
+    | .[]
+    | "== \(.[0].group) (\(length))", (.[] | "  #\(.number) \(.title)")
+  '
